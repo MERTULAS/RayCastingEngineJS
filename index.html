@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ray Casting</title>
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: rgb(134, 131, 131);
+            height: 100vh;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        #map {
+            background: #333;
+            width: 640px;
+            height: 640px;
+        }
+
+        #rendered-scene {
+            background: #333;
+            width: 640px;
+            height: 640px;
+        }
+
+    </style>
+</head>
+<body>
+    <canvas id="map"></canvas>
+    <canvas id="rendered-scene"></canvas>
+    <script src="raycasting.js"></script>
+</body>
+</html>
