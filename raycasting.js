@@ -1,3 +1,11 @@
+/*
+    Author H.Mert ULAS <h.mert.ulas@gmail.com>
+
+    3D RayCasting demo on JavaScript
+
+*/
+
+
 // MAP
 const mapCanvas = document.getElementById("map");
 const mapCanvasBoundingRect = mapCanvas.getBoundingClientRect();
@@ -61,7 +69,6 @@ let layout =   [[2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2],
 
 const GRID_WIDTH = MAP_WIDTH / layout[0].length;
 const GRID_HEIGHT = MAP_HEIGHT / layout.length;
-console.log(GRID_HEIGHT, GRID_WIDTH);
 
 class Map {
     constructor (layoutMatrix) {
@@ -134,7 +141,9 @@ class Player {
     }
 
     createFOV () {
-        background.slider(this.directionAngle);
+
+        background.slider();
+
         for (let currentStepAngle = -this.fieldOfView / 2, wallStep = 0; currentStepAngle <= this.fieldOfView / 2; currentStepAngle += this.fovAngleStep, wallStep += this.fovAngleStep) {
             mapCtx.moveTo(this.x, this.y);
             let castingPoints = [...this.ray(this.x + Math.cos((this.directionAngle + currentStepAngle) * toRADIAN),
@@ -253,7 +262,7 @@ class Textures {
         this.texturesList = [];
         for (let i = 0; i < this.sliceCounter; i++) {
             let textureObj = {
-                textureSliceStartX: i * this.width / this.sliceCounter
+                textureSliceStartX: i * this.width / this.sliceCounter - 1
             }
             this.texturesList.push(textureObj);
         }
@@ -262,48 +271,58 @@ class Textures {
 
 class Parallax {
     constructor() {
-        this.layers = []
+        this.layers = [];
+        this.bgSliders = [];
     }
 
     addLayer (layerObj) {
         // layerObj = {
-        //     img: image_path,
+        //     image: image_path,
         //     layerSlideSpeed: slide_speed
         // }
         let image = new Image();
         image.src = layerObj.image;
         layerObj.image = image;
         this.layers.push(layerObj);
+        this.bgSliders.push(SCENE_WIDTH);
     }
 
-    slider (directionAngle) {
-        this.layers.forEach(imgObject => {
+    slider () {
+
+        this.layers.forEach((imgObject, index) => {
+
+            this.mover(index, imgObject.layerSlideSpeed);
+            if (this.bgSliders[index] < 0 ) this.bgSliders[index] = SCENE_WIDTH;
+            else if(this.bgSliders[index] > SCENE_WIDTH) this.bgSliders[index] = 0;
+            
             sceneCtx.drawImage(
                 imgObject.image, 
-                SCENE_WIDTH - directionAngle * imgObject.layerSlideSpeed,
+                0 - this.bgSliders[index],
                 0,
                 SCENE_WIDTH,
-                SCENE_HEIGHT,
-                0,
-                0,
-                directionAngle * imgObject.layerSlideSpeed,
-                SCENE_HEIGHT
-            )
-            sceneCtx.drawImage(
-                imgObject.image, 
-                directionAngle * imgObject.layerSlideSpeed,
-                0,
-                SCENE_WIDTH - directionAngle * imgObject.layerSlideSpeed,
-                SCENE_HEIGHT,
-                directionAngle * imgObject.layerSlideSpeed,
-                0,
-                SCENE_WIDTH - directionAngle * imgObject.layerSlideSpeed,
-                SCENE_HEIGHT
+                SCENE_HEIGHT / 2
             )
 
-            // sceneCtx.drawImage(imgObject.image, -directionAngle * imgObject.layerSlideSpeed % SCENE_WIDTH, 0, SCENE_WIDTH, SCENE_HEIGHT / 2);
-            // sceneCtx.drawImage(imgObject.image, (-directionAngle * imgObject.layerSlideSpeed - SCENE_WIDTH) % SCENE_WIDTH, 0, SCENE_WIDTH, SCENE_HEIGHT / 2);
-        })
+            sceneCtx.drawImage(
+                imgObject.image, 
+                SCENE_WIDTH - this.bgSliders[index],
+                0,
+                SCENE_WIDTH,
+                SCENE_HEIGHT / 2
+            )
+        });
+    }
+
+    mover (index, layerSlideSpeed) {
+
+        if (playerMove["LEFT"]) {
+            this.bgSliders[index] -= layerSlideSpeed;
+        }
+
+        if (playerMove["RIGHT"]) {
+            this.bgSliders[index] += layerSlideSpeed;
+        }
+
     }
 }
 
@@ -316,25 +335,27 @@ function FPS (deltaT) {
 let map = new Map(layout);
 let textures = new Textures("/sprites/textures/wolftextures32.png", 256, 32, 8);  
 let background = new Parallax();
+
 background.addLayer({
     image: "/sprites/backgrounds/1.png",
-    layerSlideSpeed: 1
+    layerSlideSpeed: 9
 });
 
 background.addLayer({
     image: "/sprites/backgrounds/2.png",
-    layerSlideSpeed: 3
+    layerSlideSpeed: 12
 });
 
 background.addLayer({
     image: "/sprites/backgrounds/3.png",
-    layerSlideSpeed: 5
+    layerSlideSpeed: 15
 });
 
 background.addLayer({
     image: "/sprites/backgrounds/4.png",
-    layerSlideSpeed: 7 
+    layerSlideSpeed: 18
 });
+
 let char = new Player([10, 10]);
 
 
