@@ -46,22 +46,22 @@ let playerMove = {
 }
 
 let layout =   [[2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2],
+                [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
                 [2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
                 [2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-                [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-                [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2],
-                [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2],
-                [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 2],
-                [2, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-                [2, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 8, 8, 0, 0, 0, 0, 0, 0, 2],
-                [2, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 2],
-                [2, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 8, 8, 0, 0, 0, 0, 0, 0, 2],
-                [2, 0, 0, 7, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 2],
-                [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 2],
-                [2, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 2],
-                [1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-                [2, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-                [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+                [2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2],
+                [2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2],
+                [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 2],
+                [2, 0, 2, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+                [2, 0, 2, 7, 0, 0, 0, 0, 0, 0, 0, 8, 8, 0, 0, 0, 0, 0, 0, 2],
+                [2, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 2],
+                [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 0, 0, 0, 0, 0, 0, 2],
+                [2, 0, 2, 2, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 2],
+                [2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 2],
+                [2, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 2],
+                [1, 0, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+                [2, 0, 2, 0, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+                [2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
                 [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2],
                 [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2],
                 [2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2]]
@@ -158,19 +158,6 @@ class Player {
 
                 let castingDirection = castingPoints[3] === "VERTICAL" ? castingPoints[1] : castingPoints[0];
 
-                // FLOOR TEXTURES
-                // sceneCtx.drawImage(
-                //     textures.image,
-                //     textures.texturesList[3].textureSliceStartX + (castingDirection % 32),
-                //     (castingDirection % 32),
-                //     32,
-                //     32,
-                //     wallStep,
-                //     (wallStep * SCENE_WIDTH / this.fieldOfView),
-                //     SCENE_WIDTH,
-                //     320
-                // );
-
                 // WALLS TEXTURES
                 sceneCtx.drawImage(
                     textures.image,
@@ -179,7 +166,7 @@ class Player {
                     1,
                     32,
                     (wallStep * SCENE_WIDTH / this.fieldOfView),
-                    (SCENE_HEIGHT + wallHeight) / 2,  // (SCENE_HEIGHT - wallHeight) / 2 + wallHeight
+                    (SCENE_HEIGHT + wallHeight) >> 1,  // (SCENE_HEIGHT - wallHeight) / 2 + wallHeight
                     1,
                     -wallHeight
                 );
@@ -191,39 +178,33 @@ class Player {
                 sceneCtx.lineTo(wallStep * SCENE_WIDTH / this.fieldOfView, (SCENE_HEIGHT + wallHeight) / 2);
                 sceneCtx.stroke();
 
+        }
+    }
+    
+    ray (...targetPoint) {
+        let startPosX = this.x;
+        let startPosY = this.y;
+        let dx = targetPoint[0] - startPosX;
+        let dy = targetPoint[1] - startPosY;
+        let step = Math.abs(Math.abs(dx) > Math.abs(dy) ? dx : dy);
+        let incX = dx / step
+        let incY = dy / step;
+        let castingPointType = null;
+        while (1) {
+            startPosX += incX;
+            if (this.isCast(startPosX, startPosY))
+            {
+                castingPointType = "VERTICAL";
+                break;
+            }
+            startPosY += incY;
+            if (this.isCast(startPosX, startPosY))
+            {
+                castingPointType = "HORIZONTAL";
+                break;
             }
         }
-
-        colorByAngle (angle) {
-            // `hsl(${180 - angle}, 50%, 75%)`;
-            if (5 < angle && angle > -5) return `hsl(350, 50%, 75%)`;
-            else return `hsl(100, 50%, 75%)`;
-        }
-
-        ray (...targetPoint) {
-            let startPosX = this.x;
-            let startPosY = this.y;
-            let dx = targetPoint[0] - startPosX;
-            let dy = targetPoint[1] - startPosY;
-            let step = Math.abs(Math.abs(dx) > Math.abs(dy) ? dx : dy);
-            let incX = dx / step
-            let incY = dy / step;
-            let castingPointType = null;
-            while (1) {
-                startPosX += incX;
-                if (this.isCast(startPosX, startPosY))
-                {
-                    castingPointType = "VERTICAL";
-                    break;
-                }
-                startPosY += incY;
-                if (this.isCast(startPosX, startPosY))
-                {
-                    castingPointType = "HORIZONTAL";
-                    break;
-                }
-            }
-        return [startPosX, startPosY, this.isCast(startPosX, startPosY), castingPointType];
+    return [startPosX, startPosY, this.isCast(startPosX, startPosY), castingPointType];
     }
 
     isCast (...point) {
@@ -300,7 +281,7 @@ class Parallax {
                 0 - this.bgSliders[index],
                 0,
                 SCENE_WIDTH,
-                SCENE_HEIGHT / 2
+                SCENE_HEIGHT >> 1
             )
 
             sceneCtx.drawImage(
@@ -308,7 +289,7 @@ class Parallax {
                 SCENE_WIDTH - this.bgSliders[index],
                 0,
                 SCENE_WIDTH,
-                SCENE_HEIGHT / 2
+                SCENE_HEIGHT >> 1
             )
         });
     }
@@ -329,8 +310,20 @@ class Parallax {
 function FPS (deltaT) {
     sceneCtx.fillStyle = "white";
     sceneCtx.font = "30px Arial";
-    sceneCtx.fillText(`${ Math.round(1000 / deltaT)} FPS`, 10, 30);
+    let FPS = Math.round(1000 / deltaT)
+    // if (FPS > fpsMax) {
+    //     fpsMax = FPS;
+    //     console.log("Max: ", fpsMax);
+    // }
+    // if (FPS < fpsMin) {
+    //     fpsMin = FPS;
+    //     console.log("Min: ", fpsMin);
+    // }
+    sceneCtx.fillText(`${ FPS} FPS`, 10, 30);
 }
+
+
+// Use classes and functions from this point forward.
 
 let map = new Map(layout);
 let textures = new Textures("/sprites/textures/wolftextures32.png", 256, 32, 8);  
@@ -369,13 +362,14 @@ function loop () {
     char.update();
     map.create();
 }
-
+let fpsMax = 0;
+let fpsMin = Infinity;
 function game () {
     const startTime = Date.now();
 
     loop();
 
-    const endTime = Date.now();
+    const endTime = Date.now(); 
 
     FPS(endTime - startTime);
 
