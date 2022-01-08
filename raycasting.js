@@ -29,6 +29,8 @@ sceneCanvas.height = SCENE_WIDTH;
 
 const toRADIAN = Math.PI / 180;
 
+const MOUSE_X_MOVE_QUEUE = [SCENE_WIDTH >> 1];
+const MOUSE_Y_MOVE_QUEUE = [SCENE_HEIGHT >> 1];
 
 const sceneCtx = sceneCanvas.getContext("2d");
 
@@ -39,6 +41,8 @@ let mouse = {
 }
 
 let playerMove = {
+    "LEFT_ROTATION": false,
+    "RIGHT_ROTATION": false,
     "LEFT": false,
     "RIGHT": false,
     "FORWARD": false,
@@ -121,23 +125,32 @@ class Player {
 
     move () {
         Object.keys(playerMove).forEach(_ => {
-            if (playerMove["LEFT"]) {
-                this.directionAngle--;
+            if (playerMove["LEFT_ROTATION"]) {
+                this.directionAngle -= 1;
             }
 
-            if (playerMove["RIGHT"]) {
-                this.directionAngle++;
+            if (playerMove["RIGHT_ROTATION"]) {
+                this.directionAngle += 1;
             }
 
             if (playerMove["FORWARD"]) {
                 [this.x, this.y] = [...this.availableWay("FORWARD")];
-
             }
 
             if (playerMove["BACKWARD"]) {
                 [this.x, this.y] = [...this.availableWay("BACKWARD")];
             }
+
+            if (playerMove["LEFT"]) {
+                [this.x, this.y] = [...this.availableWay("LEFT")];
+            }
+
+            if (playerMove["RIGHT"]) {
+                [this.x, this.y] = [...this.availableWay("RIGHT")];
+            }
         });
+        playerMove.RIGHT_ROTATION = false;
+        playerMove.LEFT_ROTATION = false;
     }
 
     createFOV () {
@@ -229,6 +242,22 @@ class Player {
             if (layout[Math.floor(nextPointY / GRID_HEIGHT)][Math.floor(this.x / GRID_HEIGHT)]) nextPointY = this.y;
             return [nextPointX, nextPointY];
         }
+
+        else if (movingType === "LEFT") {
+            let nextPointX = this.x - 0.5 * Math.cos((this.directionAngle + 90) * Math.PI / 180);
+            if (layout[Math.floor(this.y / GRID_HEIGHT)][Math.floor(nextPointX / GRID_HEIGHT)]) nextPointX = this.x;
+            let nextPointY = this.y - 0.5 * Math.sin((this.directionAngle + 90) * Math.PI / 180);
+            if (layout[Math.floor(nextPointY / GRID_HEIGHT)][Math.floor(this.x / GRID_HEIGHT)]) nextPointY = this.y;
+            return [nextPointX, nextPointY];
+        }
+
+        else if (movingType === "RIGHT") {
+            let nextPointX = this.x - 0.5 * Math.cos((this.directionAngle - 90) * Math.PI / 180);
+            if (layout[Math.floor(this.y / GRID_HEIGHT)][Math.floor(nextPointX / GRID_HEIGHT)]) nextPointX = this.x;
+            let nextPointY = this.y - 0.5 * Math.sin((this.directionAngle - 90) * Math.PI / 180);
+            if (layout[Math.floor(nextPointY / GRID_HEIGHT)][Math.floor(this.x / GRID_HEIGHT)]) nextPointY = this.y;
+            return [nextPointX, nextPointY];
+        }
     }
 }
 
@@ -296,11 +325,11 @@ class Parallax {
 
     mover (index, layerSlideSpeed) {
 
-        if (playerMove["LEFT"]) {
+        if (playerMove["LEFT_ROTATION"]) {
             this.bgSliders[index] -= layerSlideSpeed;
         }
 
-        if (playerMove["RIGHT"]) {
+        if (playerMove["RIGHT_ROTATION"]) {
             this.bgSliders[index] += layerSlideSpeed;
         }
 
@@ -396,3 +425,36 @@ window.addEventListener("keyup", (e) => {
     if (e.keyCode === 68) playerMove.RIGHT = false;
     if (e.keyCode === 65) playerMove.LEFT = false;
 });
+
+
+sceneCanvas.requestPointerLock = sceneCanvas.requestPointerLock || 
+                        sceneCanvas.mozRequestPointerLock;
+
+document.exitPointerLock = document.exitPointerLock || 
+                        document.mozExitPointerLock;
+
+sceneCanvas.onclick = () => {
+    sceneCanvas.requestPointerLock();
+}      
+
+document.addEventListener('pointerlockchange', lockChangeAlert, false);
+document.addEventListener('mozpointerlockchange', lockChangeAlert, false);
+
+function lockChangeAlert() {
+    if (document.pointerLockElement === sceneCanvas || document.mozPointerLockElement === sceneCanvas) {
+        document.addEventListener("mousemove", updatePosition, false);
+    } 
+    
+    else {
+        document.removeEventListener("mousemove", updatePosition, false);
+    }
+}
+
+function updatePosition(e) {
+    MOUSE_X_MOVE_QUEUE.push(e.movementX);
+
+    playerMove.RIGHT_ROTATION = e.movementX > 0 ? true : false;
+    playerMove.LEFT_ROTATION = e.movementX < 0 ? true : false;
+
+    MOUSE_X_MOVE_QUEUE.shift();
+  }
