@@ -51,21 +51,21 @@ let playerMove = {
 
 let layout =   [[2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2],
                 [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-                [2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-                [2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-                [2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2],
-                [2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2],
-                [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 2],
-                [2, 0, 2, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-                [2, 0, 2, 7, 0, 0, 0, 0, 0, 0, 0, 8, 8, 0, 0, 0, 0, 0, 0, 2],
-                [2, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 2],
+                [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+                [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+                [2, 0, 0, 3, 1, 3, 3, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2],
+                [2, 0, 0, 3, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2],
+                [1, 0, 3, 3, 0, 0, 3, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 2],
+                [2, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
                 [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 0, 0, 0, 0, 0, 0, 2],
-                [2, 0, 2, 2, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 2],
-                [2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 2],
-                [2, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 2],
-                [1, 0, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-                [2, 0, 2, 0, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-                [2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+                [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 2],
+                [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 0, 0, 0, 0, 0, 0, 2],
+                [2, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 2],
+                [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 2],
+                [2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 2],
+                [1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+                [2, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+                [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
                 [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2],
                 [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2],
                 [2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2]]
@@ -100,7 +100,7 @@ class Player {
     constructor(position) {
         this.x = position[0] * GRID_WIDTH + (GRID_WIDTH / 2);
         this.y = position[1] * GRID_HEIGHT + (GRID_WIDTH / 2);
-        this.directionAngle = -90;
+        this.directionAngle = 90;
         this.fieldOfView = 60;
         this.fovAngleStep = this.fieldOfView / SCENE_WIDTH;
         this.projectionHeight = (SCENE_WIDTH / 2) / Math.tan((this.fieldOfView / 2) * toRADIAN);
@@ -124,44 +124,60 @@ class Player {
     }
 
     move () {
-        Object.keys(playerMove).forEach(_ => {
             if (playerMove["LEFT_ROTATION"]) {
-                this.directionAngle -= 1;
+                this.directionAngle = this.directionAngle === 0 ? 360 : this.directionAngle - 2;
             }
 
             if (playerMove["RIGHT_ROTATION"]) {
-                this.directionAngle += 1;
+                this.directionAngle = this.directionAngle === 360 ? 0 : this.directionAngle + 2;
             }
-
+            
             if (playerMove["FORWARD"]) {
-                [this.x, this.y] = [...this.availableWay("FORWARD")];
-            }
-
+                let nextPointX = this.x + 2 * Math.cos(this.directionAngle * Math.PI / 180);
+                if (layout[Math.floor(this.y / GRID_HEIGHT)][Math.floor(nextPointX / GRID_HEIGHT)]) nextPointX = this.x;
+                let nextPointY = this.y + 2 * Math.sin(this.directionAngle * Math.PI / 180);
+                if (layout[Math.floor(nextPointY / GRID_HEIGHT)][Math.floor(this.x / GRID_HEIGHT)]) nextPointY = this.y;
+                [this.x, this.y] = [nextPointX, nextPointY]
+             }
+    
             if (playerMove["BACKWARD"]) {
-                [this.x, this.y] = [...this.availableWay("BACKWARD")];
+                let nextPointX = this.x - 2 * Math.cos(this.directionAngle * Math.PI / 180);
+                if (layout[Math.floor(this.y / GRID_HEIGHT)][Math.floor(nextPointX / GRID_HEIGHT)]) nextPointX = this.x;
+                let nextPointY = this.y - 2 * Math.sin(this.directionAngle * Math.PI / 180);
+                if (layout[Math.floor(nextPointY / GRID_HEIGHT)][Math.floor(this.x / GRID_HEIGHT)]) nextPointY = this.y;
+                [this.x, this.y] = [nextPointX, nextPointY]
             }
-
+    
             if (playerMove["LEFT"]) {
-                [this.x, this.y] = [...this.availableWay("LEFT")];
+                let nextPointX = this.x - 2 * Math.cos((this.directionAngle + 90) * Math.PI / 180);
+                if (layout[Math.floor(this.y / GRID_HEIGHT)][Math.floor(nextPointX / GRID_HEIGHT)]) nextPointX = this.x;
+                let nextPointY = this.y - 2 * Math.sin((this.directionAngle + 90) * Math.PI / 180);
+                if (layout[Math.floor(nextPointY / GRID_HEIGHT)][Math.floor(this.x / GRID_HEIGHT)]) nextPointY = this.y;
+                [this.x, this.y] = [nextPointX, nextPointY]
+            }
+    
+            if (playerMove["RIGHT"]) {
+                let nextPointX = this.x - 2 * Math.cos((this.directionAngle - 90) * Math.PI / 180);
+                if (layout[Math.floor(this.y / GRID_HEIGHT)][Math.floor(nextPointX / GRID_HEIGHT)]) nextPointX = this.x;
+                let nextPointY = this.y - 2 * Math.sin((this.directionAngle - 90) * Math.PI / 180);
+                if (layout[Math.floor(nextPointY / GRID_HEIGHT)][Math.floor(this.x / GRID_HEIGHT)]) nextPointY = this.y;
+                [this.x, this.y] = [nextPointX, nextPointY]
             }
 
-            if (playerMove["RIGHT"]) {
-                [this.x, this.y] = [...this.availableWay("RIGHT")];
-            }
-        });
-        playerMove.RIGHT_ROTATION = false;
-        playerMove.LEFT_ROTATION = false;
+            playerMove.RIGHT_ROTATION = false;
+            playerMove.LEFT_ROTATION = false;
     }
 
     createFOV () {
 
-        background.slider();
+        // background.slider();
 
         for (let currentStepAngle = -this.fieldOfView / 2, wallStep = 0; currentStepAngle <= this.fieldOfView / 2; currentStepAngle += this.fovAngleStep, wallStep += this.fovAngleStep) {
             mapCtx.moveTo(this.x, this.y);
             let castingPoints = [...this.ray(this.x + Math.cos((this.directionAngle + currentStepAngle) * toRADIAN),
                 this.y + Math.sin((this.directionAngle + currentStepAngle) * toRADIAN))];
                 mapCtx.lineTo(castingPoints[0], castingPoints[1]);
+
 
                 // 3D RENDERING
 
@@ -183,6 +199,9 @@ class Player {
                     1,
                     -wallHeight
                 );
+
+                // FLOOR TEXTURES
+
 
                 // SHADER EFFECT
                 sceneCtx.strokeStyle = `rgba(0, 0, 0, ${1 - ((1 / rayDistance ) * 75)})`;
@@ -225,40 +244,6 @@ class Player {
         if (position) return position;
         return 0;
     }
-
-    availableWay (movingType) {
-        if (movingType === "FORWARD") {
-            let nextPointX = this.x + 0.5 * Math.cos(this.directionAngle * Math.PI / 180);
-            if (layout[Math.floor(this.y / GRID_HEIGHT)][Math.floor(nextPointX / GRID_HEIGHT)]) nextPointX = this.x;
-            let nextPointY = this.y + 0.5 * Math.sin(this.directionAngle * Math.PI / 180);
-            if (layout[Math.floor(nextPointY / GRID_HEIGHT)][Math.floor(this.x / GRID_HEIGHT)]) nextPointY = this.y;
-            return [nextPointX, nextPointY];
-        }
-
-        else if (movingType === "BACKWARD") {
-            let nextPointX = this.x - 0.5 * Math.cos(this.directionAngle * Math.PI / 180);
-            if (layout[Math.floor(this.y / GRID_HEIGHT)][Math.floor(nextPointX / GRID_HEIGHT)]) nextPointX = this.x;
-            let nextPointY = this.y - 0.5 * Math.sin(this.directionAngle * Math.PI / 180);
-            if (layout[Math.floor(nextPointY / GRID_HEIGHT)][Math.floor(this.x / GRID_HEIGHT)]) nextPointY = this.y;
-            return [nextPointX, nextPointY];
-        }
-
-        else if (movingType === "LEFT") {
-            let nextPointX = this.x - 0.5 * Math.cos((this.directionAngle + 90) * Math.PI / 180);
-            if (layout[Math.floor(this.y / GRID_HEIGHT)][Math.floor(nextPointX / GRID_HEIGHT)]) nextPointX = this.x;
-            let nextPointY = this.y - 0.5 * Math.sin((this.directionAngle + 90) * Math.PI / 180);
-            if (layout[Math.floor(nextPointY / GRID_HEIGHT)][Math.floor(this.x / GRID_HEIGHT)]) nextPointY = this.y;
-            return [nextPointX, nextPointY];
-        }
-
-        else if (movingType === "RIGHT") {
-            let nextPointX = this.x - 0.5 * Math.cos((this.directionAngle - 90) * Math.PI / 180);
-            if (layout[Math.floor(this.y / GRID_HEIGHT)][Math.floor(nextPointX / GRID_HEIGHT)]) nextPointX = this.x;
-            let nextPointY = this.y - 0.5 * Math.sin((this.directionAngle - 90) * Math.PI / 180);
-            if (layout[Math.floor(nextPointY / GRID_HEIGHT)][Math.floor(this.x / GRID_HEIGHT)]) nextPointY = this.y;
-            return [nextPointX, nextPointY];
-        }
-    }
 }
 
 
@@ -280,7 +265,7 @@ class Textures {
 }
 
 class Parallax {
-    constructor() {
+    constructor () {
         this.layers = [];
         this.bgSliders = [];
     }
@@ -336,6 +321,20 @@ class Parallax {
     }
 }
 
+class SingleTexture {
+    constructor (image, width, height) {
+        this.image = new Image();
+        this.image.src = image;
+        this.image.onload = () => {
+            this.#loader(width, height);
+        }
+    }
+
+    #loader (width, height) {
+        sceneCtx.drawImage(this.image, 0, 0, width, height);
+    }
+}
+
 function FPS (deltaT) {
     sceneCtx.fillStyle = "white";
     sceneCtx.font = "30px Arial";
@@ -357,6 +356,8 @@ function FPS (deltaT) {
 let map = new Map(layout);
 let textures = new Textures("/sprites/textures/wolftextures32.png", 256, 32, 8);  
 let background = new Parallax();
+
+let floorTexture = new SingleTexture("/sprites/textures/floor_texture.png", 32, 32);
 
 background.addLayer({
     image: "/sprites/backgrounds/1.png",
@@ -380,16 +381,25 @@ background.addLayer({
 
 let char = new Player([10, 10]);
 
+function characterInfo () {
+    sceneCtx.font = "25px Roboto";
+    sceneCtx.fillStyle = "red";
+    sceneCtx.fillText(`x: ${ Math.floor(char.x / GRID_WIDTH)}`, 200, 30);
+    sceneCtx.fillText(`y: ${ Math.floor(char.y / GRID_HEIGHT)}`, 280, 30);
+    sceneCtx.fillText(`deg: ${ char.directionAngle}`, 360, 30);
+}
 
 function loop () {
     mapCtx.clearRect(0, 0, MAP_WIDTH, MAP_HEIGHT);
     sceneCtx.clearRect(0, 0, SCENE_WIDTH, SCENE_HEIGHT);
     // sceneCtx.fillStyle = "#333";
     // sceneCtx.fillRect(0, 0, SCENE_WIDTH, SCENE_HEIGHT / 2);
-    // sceneCtx.fillStyle = "green";
-    // sceneCtx.fillRect(0, 320, SCENE_WIDTH, SCENE_HEIGHT / 2);
+    sceneCtx.fillStyle = "green";
+    sceneCtx.fillRect(0, 320, SCENE_WIDTH, SCENE_HEIGHT / 2);
     char.update();
     map.create();
+    characterInfo();
+
 }
 let fpsMax = 0;
 let fpsMin = Infinity;
