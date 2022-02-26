@@ -9,3 +9,4 @@ TODO:
 - Floor and ceil textures.
 - Mouse controller (Done but should be improve)
 - Movement on the y-axis.
+- 360 parallax sky improvement
