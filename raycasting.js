@@ -170,7 +170,7 @@ class Player {
 
     createFOV () {
 
-        // background.slider();
+        background.slider();
 
         for (let currentStepAngle = -this.fieldOfView / 2, wallStep = 0; currentStepAngle <= this.fieldOfView / 2; currentStepAngle += this.fovAngleStep, wallStep += this.fovAngleStep) {
             mapCtx.moveTo(this.x, this.y);
@@ -200,8 +200,27 @@ class Player {
                     -wallHeight
                 );
 
-                // FLOOR TEXTURES
+                // WALLS REFLECTIONS
+                sceneCtx.drawImage(
+                    reflectedTextures.image,
+                    reflectedTextures.texturesList[castingPoints[2] - 1].textureSliceStartX + (castingDirection % 32),
+                    0,
+                    1,
+                    32,
+                    (wallStep * SCENE_WIDTH / this.fieldOfView),
+                    ((SCENE_HEIGHT + wallHeight) >> 1) + wallHeight,  // (SCENE_HEIGHT - wallHeight) / 2 + wallHeight
+                    1,
+                    -wallHeight
+                );
 
+                sceneCtx.strokeStyle = `rgba(189, 187, 189, ${1.5 - ((1 / rayDistance ) * 75)})`;
+                sceneCtx.beginPath();
+                sceneCtx.moveTo(wallStep * SCENE_WIDTH / this.fieldOfView, (SCENE_HEIGHT + wallHeight) / 2);
+                sceneCtx.lineTo(wallStep * SCENE_WIDTH / this.fieldOfView, (SCENE_HEIGHT + (3 * wallHeight)) / 2);
+                sceneCtx.stroke();
+
+                // FLOOR TEXTURES
+                    // Coming soon... I hope...
 
                 // SHADER EFFECT
                 sceneCtx.strokeStyle = `rgba(0, 0, 0, ${1 - ((1 / rayDistance ) * 75)})`;
@@ -249,18 +268,20 @@ class Player {
 
 class Textures {
     constructor (imageName, width, height, slice) {
+        this.sliceCounter = slice;
+        this.texturesList = [];
+
         this.image = new Image();
         this.image.src = imageName;
         this.width = width;
         this.height = height;
-        this.sliceCounter = slice;
-        this.texturesList = [];
+
         for (let i = 0; i < this.sliceCounter; i++) {
             let textureObj = {
                 textureSliceStartX: i * this.width / this.sliceCounter - 1
-            }
+            };
             this.texturesList.push(textureObj);
-        }
+        }  
     }
 }
 
@@ -327,11 +348,19 @@ class SingleTexture {
         this.image.src = image;
         this.image.onload = () => {
             this.#loader(width, height);
+            this.convert2D();
         }
+        this.imageData = [];
     }
 
     #loader (width, height) {
-        sceneCtx.drawImage(this.image, 0, 0, width, height);
+        let imageBuffer = document.createElement("canvas");
+        imageBuffer.width = this.image.width;
+        imageBuffer.height = this.image.height;
+        imageBuffer = imageBuffer.getContext("2d");
+        imageBuffer.drawImage(this.image, 0, 0);
+        this.imageData = imageBuffer.getImageData(0, 0, this.image.width, this.image.height).data;
+        sceneCtx.putImageData(imageBuffer.getImageData(0, 0, this.image.width, this.image.height), 0, 100);
     }
 }
 
@@ -354,10 +383,11 @@ function FPS (deltaT) {
 // Use classes and functions from this point forward.
 
 let map = new Map(layout);
-let textures = new Textures("/sprites/textures/wolftextures32.png", 256, 32, 8);  
+let textures = new Textures("/sprites/textures/wolftextures32.png", 256, 32, 8); 
+let reflectedTextures = new Textures("/sprites/textures/wolftexturesflopped32.png", 256, 32, 8); 
 let background = new Parallax();
 
-let floorTexture = new SingleTexture("/sprites/textures/floor_texture.png", 32, 32);
+// let floorTexture = new SingleTexture("/sprites/textures/floor_texture.png", 32, 32);
 
 background.addLayer({
     image: "/sprites/backgrounds/1.png",
@@ -394,7 +424,7 @@ function loop () {
     sceneCtx.clearRect(0, 0, SCENE_WIDTH, SCENE_HEIGHT);
     // sceneCtx.fillStyle = "#333";
     // sceneCtx.fillRect(0, 0, SCENE_WIDTH, SCENE_HEIGHT / 2);
-    sceneCtx.fillStyle = "green";
+    sceneCtx.fillStyle = "#9a9a9a";
     sceneCtx.fillRect(0, 320, SCENE_WIDTH, SCENE_HEIGHT / 2);
     char.update();
     map.create();
@@ -415,7 +445,11 @@ function game () {
     requestAnimationFrame(game);
 }
 
-game();
+window.onload = () => {
+   game();
+}
+
+
 
 mapCanvas.addEventListener("mousemove", (e) => {
     mouse.x = e.x - mapCanvasBoundingRect.left;
