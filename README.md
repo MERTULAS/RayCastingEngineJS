@@ -2,7 +2,7 @@
 ## 3D RayCasting Engine as a demo for Pure JavaScript (no library... no framework...)
 ### Under development...
 
-![Alt Text](https://media.giphy.com/media/CW52t2we97nXngkApf/giphy.gif)
+![Alt Text](https://media.giphy.com/media/Ul8vqAtHoMc8V3CkaP/giphy.gif)
 
 
 TODO:
