@@ -383,29 +383,29 @@ function FPS (deltaT) {
 // Use classes and functions from this point forward.
 
 let map = new Map(layout);
-let textures = new Textures("/sprites/textures/wolftextures32.png", 256, 32, 8); 
-let reflectedTextures = new Textures("/sprites/textures/wolftexturesflopped32.png", 256, 32, 8); 
+let textures = new Textures("./sprites/textures/wolftextures32.png", 256, 32, 8); 
+let reflectedTextures = new Textures("./sprites/textures/wolftexturesflopped32.png", 256, 32, 8); 
 let background = new Parallax();
 
 // let floorTexture = new SingleTexture("/sprites/textures/floor_texture.png", 32, 32);
 
 background.addLayer({
-    image: "/sprites/backgrounds/1.png",
+    image: "./sprites/backgrounds/1.png",
     layerSlideSpeed: 9
 });
 
 background.addLayer({
-    image: "/sprites/backgrounds/2.png",
+    image: "./sprites/backgrounds/2.png",
     layerSlideSpeed: 12
 });
 
 background.addLayer({
-    image: "/sprites/backgrounds/3.png",
+    image: "./sprites/backgrounds/3.png",
     layerSlideSpeed: 15
 });
 
 background.addLayer({
-    image: "/sprites/backgrounds/4.png",
+    image: "./sprites/backgrounds/4.png",
     layerSlideSpeed: 18
 });
 
