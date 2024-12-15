@@ -1,21 +1,20 @@
-// MAP
-const mapCanvas = document.getElementById("map");
-const mapCanvasBoundingRect = mapCanvas.getBoundingClientRect();
-const MAP_WIDTH = mapCanvasBoundingRect.width;
-const MAP_HEIGHT = mapCanvasBoundingRect.height;
-
-mapCanvas.width = MAP_WIDTH;
-mapCanvas.height = MAP_HEIGHT;
-
-
 class Map {
-    constructor(layoutObject) {
+    constructor(layoutObject, canvasId) {
         if (layoutObject.length !== layoutObject[0].length) {
             throw Error("Map layout is must be square matrix. (n x n)");
         }
+
+        this.canvas = document.getElementById(canvasId);
+        this.canvasBoundingRect = this.canvas.getBoundingClientRect();
+        this.MAP_WIDTH = this.canvasBoundingRect.width;
+        this.MAP_HEIGHT = this.canvasBoundingRect.height;
+
+        this.canvas.width = this.MAP_WIDTH;
+        this.canvas.height = this.MAP_HEIGHT;
+
         this.layout = layoutObject;
-        this.gridCellWidth = parseInt(MAP_WIDTH / this.layout[0].length);
-        this.gridCellHeight = parseInt(MAP_HEIGHT / this.layout.length);
+        this.gridCellWidth = parseInt(this.MAP_WIDTH / this.layout[0].length);
+        this.gridCellHeight = parseInt(this.MAP_HEIGHT / this.layout.length);
     }
 
     render(ctx) {

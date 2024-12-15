@@ -1,3 +1,5 @@
+import Scene from "./scene";
+
 class Engine {
     constructor({mapCanvasId, sceneCanvasId}) {
         if (Engine.instance) {
@@ -13,8 +15,8 @@ class Engine {
         this.mapCanvas = document.getElementById(mapCanvasId);
         this.mapCtx = this.mapCanvas.getContext('2d');
 
-        /* this.sceneCanvas = document.getElementById(sceneCanvasId);
-        this.sceneCtx = this.sceneCanvas.getContext('2d'); */
+        this.sceneCanvas = document.getElementById(sceneCanvasId);
+        this.sceneCtx = this.sceneCanvas.getContext('2d');
 
         this.gameObjects = [];
         this.running = false;
@@ -43,7 +45,7 @@ class Engine {
 
     clear() {
         this.mapCtx.clearRect(0, 0, this.mapCanvas.width, this.mapCanvas.height);
-        // this.sceneCtx.clearRect(0, 0, this.sceneCanvas.width, this.sceneCanvas.height);
+        this.sceneCtx.clearRect(0, 0, this.sceneCanvas.width, this.sceneCanvas.height);
     }
 
     update(deltaTime) {
@@ -54,7 +56,10 @@ class Engine {
     }
 
     render() {
-        this.gameObjects.forEach(gameObject => gameObject.render(this.mapCtx));
+        for (let i = 0; i < this.gameObjects.length; i++) {
+            const gameObject = this.gameObjects[i];
+            gameObject.render && gameObject.render(gameObject instanceof Scene ? this.sceneCtx : this.mapCtx);
+        }
     }
 
     addGameObject(gameObject) {

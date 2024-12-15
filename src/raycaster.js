@@ -30,11 +30,12 @@ class RayCaster {
     #castRays() {
         const rays = [];
         const FOV = this.player.fieldOfViewDeg;
-        const rayCount = 60;
+        const rayCount = this.map.MAP_WIDTH;
+        const rayStep = FOV / rayCount;
 
         const firstRayAngle = this.player.rotate - (FOV / 2);
         
-        for(let i = 0; i < rayCount; i += .1) {
+        for(let i = 0; i < FOV; i += rayStep) {
             const rayAngle = firstRayAngle + i;
             rays.push(this.#castSingleRay(rayAngle));
         }

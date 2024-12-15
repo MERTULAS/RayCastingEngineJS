@@ -19,6 +19,7 @@ class Player {
         this.rotate = 0;
         this.size = 5;
         this.speed = .05;
+        this.playerHeight = 1;
 
         this.fieldOfViewDeg = 60;
 
