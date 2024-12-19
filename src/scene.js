@@ -1,21 +1,23 @@
 import { RADIUS } from "./utils";
-    
+
 class Scene {
     constructor(canvasId) {
         this.canvas = document.getElementById(canvasId);
         this.canvasCtx = this.canvas.getContext('2d');
 
-        this.canvas.width = this.canvas.clientWidth;    
+        this.canvas.width = this.canvas.clientWidth;
         this.canvas.height = this.canvas.clientHeight;
 
         this.SCENE_WIDTH = this.canvas.clientWidth;
         this.SCENE_HEIGHT = this.canvas.clientHeight;
-        
+
         this.WALL_HEIGHT = 1; // UNIT GRID SYSTEM
 
         this.observer = null;
         this.numeratorForWallHeightCalculation = null;
 
+        this.sceneFrame = this.canvasCtx.createImageData(this.SCENE_WIDTH, this.SCENE_HEIGHT);
+        this.sceneBuffer = new Uint32Array(this.sceneFrame.data.buffer);
 
     }
 
@@ -23,8 +25,6 @@ class Scene {
         this.observer = observer;
         this.#initializeProjectionValues();
     }
-
-    
 
     update() {
         // TODO: Update the scene
@@ -40,19 +40,44 @@ class Scene {
         const distanceFromPlayerToProjectionPlane = (this.SCENE_WIDTH / 2) / Math.tan((this.observer.player.fieldOfViewDeg / 2) * RADIUS);
         this.numeratorForWallHeightCalculation = this.WALL_HEIGHT * distanceFromPlayerToProjectionPlane;
     }
+ 
+    #drawWall(x, y, color, height) {
+        let startY = Math.floor((this.SCENE_HEIGHT - height) / 2);
+        let endY = startY + height;
+        
+        // Clipping uygula
+        startY = Math.max(0, startY);
+        endY = Math.min(this.SCENE_HEIGHT, endY);
+        
+        const buffer = this.sceneBuffer;
+        const width = this.SCENE_WIDTH;
+        
+        for (let y = startY; y < endY; y++) {
+            buffer[y * width + x] = color;
+        }
+    }
+
+    #clearPixelMap() {
+        this.sceneBuffer.fill(0x33333333);
+    }
 
     render(ctx) {
-        this.observer.raysHittingPoints.forEach((ray, index) => {
+        this.#clearPixelMap();
+        
+        const walls = this.observer.raysHittingPoints.map((ray, index) => {
             const angleDiff = ray.angle - this.observer.player.rotate;
             const correctedRayDistance = (ray.distance * Math.cos(angleDiff * RADIUS));
-            const projectedWallHeight = this.numeratorForWallHeightCalculation / correctedRayDistance;
-
-            ctx.beginPath();
-            ctx.moveTo(index, (this.SCENE_HEIGHT - projectedWallHeight) / 2);
-            ctx.lineTo(index, (this.SCENE_HEIGHT + projectedWallHeight) / 2);
-            ctx.stroke();
+            return {
+                x: index,
+                height: this.numeratorForWallHeightCalculation / correctedRayDistance
+            };
         });
-
+        
+        for (const wall of walls) {
+            this.#drawWall(wall.x, 0, 0xFF000000, wall.height);
+        }
+        
+        ctx.putImageData(this.sceneFrame, 0, 0);
     }
 
 
