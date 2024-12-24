@@ -73,6 +73,7 @@ class RayCaster {
         
         let hit = false;
         let side; // X=0, Y=1
+        let hitValue = 0;
         
         while (!hit) {
             if (sideDistX < sideDistY) {
@@ -84,8 +85,10 @@ class RayCaster {
                 mapY += stepY;
                 side = 1;
             }
+
+            hitValue = this.#isRayCast(mapX, mapY);
             
-            if (this.#isRayCast(mapX, mapY)) {
+            if (hitValue) {
                 hit = true;
             }
         }
@@ -111,6 +114,7 @@ class RayCaster {
                 Math.pow(wallX - this.player.coordX, 2) + 
                 Math.pow(wallY - this.player.coordY, 2)
             ),
+            hitValue: hitValue,
             angle: angle,
             side: side
         };
