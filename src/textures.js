@@ -21,7 +21,7 @@ export class Texture {
             };
             
             this.image.onerror = () => {
-                reject(new Error('Texture yüklenemedi'));
+                reject(new Error('Texture could not be loaded'));
             };
         });
     }

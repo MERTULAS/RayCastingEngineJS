@@ -29,7 +29,7 @@ const MAP_LAYOUT = [
 ];
 
 const map = new Map(MAP_LAYOUT, "map");
-const player = new Player(1.5, 9.5);
+const player = new Player(2.5, 9.5);
 player.addObserver(map);
 const raycaster = new RayCaster(player, map);
 

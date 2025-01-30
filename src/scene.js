@@ -50,8 +50,8 @@ class Scene {
         let startY = Math.floor((this.SCENE_HEIGHT - height) / 2);
         let endY = startY + height;
         
-        startY = Math.max(0, startY);
-        endY = Math.min(this.SCENE_HEIGHT, endY);
+        startY = Math.max(-this.SCENE_HEIGHT * 5, startY);
+        endY = Math.min(this.SCENE_HEIGHT * 5, endY);
         
         const buffer = this.sceneBuffer;
         const width = this.SCENE_WIDTH;

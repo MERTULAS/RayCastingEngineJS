@@ -16,8 +16,8 @@ class Player {
         this.observer = null;
         this.coordX = coordX;
         this.coordY = coordY;
-        this.rotate = 0;
-        this.size = 5;
+        this.rotate = 180;
+        this.size = 10;
         this.speed = .05;
         this.playerHeight = 1;
 
