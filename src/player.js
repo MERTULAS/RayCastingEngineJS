@@ -9,7 +9,9 @@ class Player {
         s: false,
         d: false,
         q: false,
-        e: false
+        e: false,
+        u: false,
+        j: false
     };
 
     constructor (coordX, coordY) {
@@ -19,7 +21,7 @@ class Player {
         this.rotate = 180;
         this.size = 10;
         this.speed = .05;
-        this.playerHeight = 1;
+        this.playerHeight = .5;
 
         this.fieldOfViewDeg = 60;
 
@@ -129,6 +131,14 @@ class Player {
                 this.coordY = newPosition.y;
             }
         };
+
+        if (this.movementKeys.u) {
+            this.playerHeight += 0.01;
+        }
+        
+        if (this.movementKeys.j) {
+            this.playerHeight -= 0.01;
+        }
 
         if (this.movementKeys.q) this.rotate -= 1;
         if (this.movementKeys.e) this.rotate += 1;

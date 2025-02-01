@@ -35,6 +35,9 @@ const raycaster = new RayCaster(player, map);
 
 const textureManager = new TextureManager();
 await textureManager.addTexture("./sprites/textures/wolftextures32.png");
+await textureManager.addTexture("./sprites/textures/floor-texture.png");
+await textureManager.addTexture("./sprites/textures/null-floor.png");
+await textureManager.addTexture("./sprites/textures/floor_texture.png");
 
 const scene = new Scene("scene");
 

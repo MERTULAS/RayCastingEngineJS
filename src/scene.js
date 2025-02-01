@@ -15,6 +15,7 @@ class Scene {
 
         this.observer = null;
         this.numeratorForWallHeightCalculation = null;
+        this.distanceFromPlayerToProjectionPlane = null;
 
         this.sceneFrame = this.canvasCtx.createImageData(this.SCENE_WIDTH, this.SCENE_HEIGHT);
         this.sceneBuffer = new Uint32Array(this.sceneFrame.data.buffer);
@@ -42,8 +43,8 @@ class Scene {
         distance from player to projection plane    distance from player to wall    
         */
 
-        const distanceFromPlayerToProjectionPlane = (this.SCENE_WIDTH / 2) / Math.tan((this.observer.player.fieldOfViewDeg / 2) * RADIUS);
-        this.numeratorForWallHeightCalculation = this.WALL_HEIGHT * distanceFromPlayerToProjectionPlane;
+        this.distanceFromPlayerToProjectionPlane = (this.SCENE_WIDTH / 2) / Math.tan((this.observer.player.fieldOfViewDeg / 2) * RADIUS);
+        this.numeratorForWallHeightCalculation = this.WALL_HEIGHT * this.distanceFromPlayerToProjectionPlane;
     }
  
     #drawWall(x, y, color, height, hitValue, slicer) {
@@ -65,6 +66,50 @@ class Scene {
         }
     }
 
+    #drawFloor(walls) {
+        const screenMiddleHeight = this.SCENE_HEIGHT >> 1;
+        const floorTexture = this.textureManager.textures[3];
+
+        for (const wall of walls) {
+            for (let y = screenMiddleHeight + (wall.height >> 1); y < this.SCENE_HEIGHT; y++) {
+                const betaAngle = wall.rayAngle;
+                const rowDistance = this.observer.player.playerHeight * this.distanceFromPlayerToProjectionPlane / (y - screenMiddleHeight);
+                const realDistance = rowDistance / Math.cos((betaAngle - this.observer.player.rotate) * RADIUS);
+
+                const floorX = this.observer.player.coordX + realDistance * Math.cos(betaAngle * RADIUS);
+                const floorY = this.observer.player.coordY + realDistance * Math.sin(betaAngle * RADIUS);
+
+                const textureX = Math.floor(floorX * 32) & 31;
+                const textureY = Math.floor(floorY * 32) & 31;
+                
+                const color = floorTexture.getSliceBuffer(textureX, textureY, 1, 1);
+                this.sceneBuffer[y * this.SCENE_WIDTH + wall.x] = color[0];
+            }
+        }
+    }
+
+    #drawCeil(walls) {
+        const screenMiddleHeight = this.SCENE_HEIGHT >> 1;
+        const floorTexture = this.textureManager.textures[1];
+
+        for (const wall of walls) {
+            for (let y = 0; y < screenMiddleHeight - (wall.height >> 1); y++) {
+                const betaAngle = wall.rayAngle;
+                const rowDistance = this.observer.player.playerHeight * this.distanceFromPlayerToProjectionPlane / (screenMiddleHeight - y);
+                const realDistance = rowDistance / Math.cos((betaAngle - this.observer.player.rotate) * RADIUS);
+
+                const ceilX = this.observer.player.coordX + realDistance * Math.cos(betaAngle * RADIUS);
+                const ceilY = this.observer.player.coordY + realDistance * Math.sin(betaAngle * RADIUS);
+
+                const textureX = Math.floor(ceilX * 32) & 31;
+                const textureY = Math.floor(ceilY * 32) & 31;
+                
+                const color = floorTexture.getSliceBuffer(textureX, textureY, 1, 1);
+                this.sceneBuffer[y * this.SCENE_WIDTH + wall.x] = color[0];
+            }
+        }
+    }
+
     #clearPixelMap() {
         this.sceneBuffer.fill(0x33333333);
     }
@@ -79,18 +124,22 @@ class Scene {
                 x: index,
                 height: this.numeratorForWallHeightCalculation / correctedRayDistance,
                 hitValue: ray.hitValue,
-                slicer: ray.side === 0 ? ray.y : ray.x
+                slicer: ray.side === 0 ? ray.y : ray.x,
+                rayAngle: ray.angle
             };
         });
+
+        this.#drawFloor(walls);
         
         for (const wall of walls) {
             this.#drawWall(wall.x, 0, 0xFF000000, wall.height, wall.hitValue, wall.slicer);
         }
+
+        this.#drawCeil(walls);
+
         
         ctx.putImageData(this.sceneFrame, 0, 0);
     }
-
-
 
 }
 
