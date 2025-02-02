@@ -20,6 +20,19 @@ class Engine {
 
         this.gameObjects = [];
         this.running = false;
+
+        this.fps = 0;
+        this.frames = 0;
+        this.lastFpsUpdate = 0;
+
+        this.fpsDisplay = document.createElement('div');
+        this.fpsDisplay.style.position = 'fixed';
+        this.fpsDisplay.style.top = '10px';
+        this.fpsDisplay.style.left = '10px';
+        this.fpsDisplay.style.color = 'white';
+        this.fpsDisplay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+        this.fpsDisplay.style.padding = '5px';
+        document.body.appendChild(this.fpsDisplay);
     }
 
     start() {
@@ -35,6 +48,14 @@ class Engine {
 
         const deltaTime = time - this.lastTime;
         this.lastTime = time;
+
+        this.frames++;
+        if (time - this.lastFpsUpdate >= 1000) {
+            this.fps = this.frames;
+            this.frames = 0;
+            this.lastFpsUpdate = time;
+            this.fpsDisplay.textContent = `FPS: ${this.fps}`;
+        }
 
         this.clear();
         this.update(deltaTime);

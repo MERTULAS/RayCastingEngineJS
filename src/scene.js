@@ -122,7 +122,7 @@ class Scene {
             const correctedRayDistance = (ray.distance * Math.cos(angleDiff * RADIUS));
             return {
                 x: index,
-                height: this.numeratorForWallHeightCalculation / correctedRayDistance,
+                height: this.numeratorForWallHeightCalculation * (this.observer.player.playerHeight * 2) / correctedRayDistance,
                 hitValue: ray.hitValue,
                 slicer: ray.side === 0 ? ray.y : ray.x,
                 rayAngle: ray.angle
