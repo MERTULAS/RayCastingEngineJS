@@ -1,41 +1,40 @@
 import { RADIUS } from "./utils";
+import CanvasManager from "./canvas";
 
 class RayCaster {
     constructor(player, map) {
+        this._mapCtx = CanvasManager.getInstance().getContext("map");
+        this._sceneCanvas = CanvasManager.getInstance().getCanvas("scene");
+
         this.player = player;
         this.map = map;
+
+        const rayCount = this._sceneCanvas.width;
+
+        this.rayStep = this.player.fieldOfViewDeg / rayCount;
     }
 
     update(deltaTime) {
         this.raysHittingPoints = this.#castRays();
     }
 
-    render(ctx) {
-        this.raysHittingPoints.forEach(ray => {
-            ctx.strokeStyle = ray.side === 0 ? 'rgba(255,0,0,0.8)' : 'rgba(200,0,0,0.8)';
-            
-            ctx.beginPath();
-            ctx.moveTo(
-                this.player.coordX * this.map.gridCellWidth, 
-                this.player.coordY * this.map.gridCellHeight
-            );
-            ctx.lineTo(
-                ray.x * this.map.gridCellWidth, 
-                ray.y * this.map.gridCellHeight
-            );
-            ctx.stroke();
-        });
+    render() {
+        for(let i = 0; i < this.raysHittingPoints.length; i++) {
+            const ray = this.raysHittingPoints[i];
+            this._mapCtx.strokeStyle = ray.side === 0 ? 'rgba(255,0,0,0.8)' : 'rgba(200,0,0,0.8)';
+            this._mapCtx.beginPath();
+            this._mapCtx.moveTo(this.player.coordX * this.map.gridCellWidth, this.player.coordY * this.map.gridCellHeight);
+            this._mapCtx.lineTo(ray.x * this.map.gridCellWidth, ray.y * this.map.gridCellHeight);
+            this._mapCtx.stroke();
+        }
     }
 
     #castRays() {
         const rays = [];
-        const FOV = this.player.fieldOfViewDeg;
-        const rayCount = this.map.MAP_WIDTH;
-        const rayStep = FOV / rayCount;
 
-        const firstRayAngle = this.player.rotate - (FOV / 2);
+        const firstRayAngle = this.player.rotate - (this.player.fieldOfViewDeg / 2);
         
-        for(let i = 0; i < FOV; i += rayStep) {
+        for(let i = 0; i < this.player.fieldOfViewDeg; i += this.rayStep) {
             const rayAngle = firstRayAngle + i;
             rays.push(this.#castSingleRay(rayAngle));
         }

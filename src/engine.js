@@ -1,22 +1,21 @@
 import Scene from "./scene";
+import CanvasManager from "./canvas";
 
 class Engine {
-    constructor({mapCanvasId, sceneCanvasId}) {
+    static instance = null;
+
+    constructor () {
         if (Engine.instance) {
             return Engine.instance;
         }
-        
+
         Engine.instance = this;
 
-        if (!mapCanvasId && !sceneCanvasId) {
-            throw Error("Map canvas and scene canvas are required");
-        };
 
-        this.mapCanvas = document.getElementById(mapCanvasId);
-        this.mapCtx = this.mapCanvas.getContext('2d');
-
-        this.sceneCanvas = document.getElementById(sceneCanvasId);
-        this.sceneCtx = this.sceneCanvas.getContext('2d');
+        this.mapCanvas = CanvasManager.getInstance().getCanvas("map");
+        this.sceneCanvas = CanvasManager.getInstance().getCanvas("scene");
+        this.mapCtx = CanvasManager.getInstance().getContext("map");
+        this.sceneCtx = CanvasManager.getInstance().getContext("scene");
 
         this.gameObjects = [];
         this.running = false;
@@ -70,16 +69,16 @@ class Engine {
     }
 
     update(deltaTime) {
-        for (let i = 0; i < this.gameObjects.length; i++) {
-            const gameObject = this.gameObjects[i];
+        // Maybe I'll back to classic for loop
+        for (const gameObject of this.gameObjects) {
             gameObject.update && gameObject.update(deltaTime);
         }
     }
 
     render() {
-        for (let i = 0; i < this.gameObjects.length; i++) {
-            const gameObject = this.gameObjects[i];
-            gameObject.render && gameObject.render(gameObject instanceof Scene ? this.sceneCtx : this.mapCtx);
+        // Maybe I'll back to classic for loop
+        for (const gameObject of this.gameObjects) {
+            gameObject.render && gameObject.render();
         }
     }
 

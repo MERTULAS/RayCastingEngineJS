@@ -1,6 +1,7 @@
 // PLAYER
 
 import { RADIUS } from "./utils";
+import CanvasManager from "./canvas";
 
 class Player {
     movementKeys = {
@@ -15,6 +16,10 @@ class Player {
     };
 
     constructor (coordX, coordY) {
+
+        this._mapCanvas = CanvasManager.getInstance().getCanvas("map");
+        this._mapCtx = CanvasManager.getInstance().getContext("map");
+
         this.observer = null;
         this.coordX = coordX;
         this.coordY = coordY;
@@ -69,18 +74,17 @@ class Player {
         // this.rotate += (this.targetRotation - this.rotate) * this.mouseSmoothness;
     }
 
-    render (ctx) {
-        ctx.fillStyle = "red";
-        ctx.beginPath();
-        ctx.arc(this.observer.gridCellWidth * this.coordX, this.observer.gridCellHeight * this.coordY, this.size, 0, 2 * Math.PI);
-        ctx.fill();
+    render () {
+        this._mapCtx.beginPath();
+        this._mapCtx.arc(this.observer.gridCellWidth * this.coordX, this.observer.gridCellHeight * this.coordY, this.size, 0, 2 * Math.PI);
+        this._mapCtx.fill();
 
         // Direction line
-        ctx.strokeStyle = "black";
-        ctx.beginPath();
-        ctx.moveTo(this.observer.gridCellWidth * this.coordX, this.observer.gridCellHeight * this.coordY);
-        ctx.lineTo(this.observer.gridCellWidth * this.coordX + this.observer.gridCellWidth * Math.cos(this.rotate * RADIUS), this.observer.gridCellHeight * this.coordY + this.observer.gridCellHeight * Math.sin(this.rotate * RADIUS));
-        ctx.stroke();
+        this._mapCtx.strokeStyle = "black";
+        this._mapCtx.beginPath();
+        this._mapCtx.moveTo(this.observer.gridCellWidth * this.coordX, this.observer.gridCellHeight * this.coordY);
+        this._mapCtx.lineTo(this.observer.gridCellWidth * this.coordX + this.observer.gridCellWidth * Math.cos(this.rotate * RADIUS), this.observer.gridCellHeight * this.coordY + this.observer.gridCellHeight * Math.sin(this.rotate * RADIUS));
+        this._mapCtx.stroke();
     }
 
     #blockedAreaControlForMovement(newLocation) {
