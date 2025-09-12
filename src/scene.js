@@ -1,15 +1,19 @@
 import { RADIUS } from "./utils";
+import CanvasManager from "./canvas";
 
 class Scene {
-    constructor(canvasId) {
-        this.canvas = document.getElementById(canvasId);
-        this.canvasCtx = this.canvas.getContext('2d');
 
-        this.canvas.width = this.canvas.clientWidth;
-        this.canvas.height = this.canvas.clientHeight;
+    constructor() {
+        
+        this._sceneCanvas = CanvasManager.getInstance().getCanvas("scene");
+        this._sceneCtx = CanvasManager.getInstance().getContext("scene");
 
-        this.SCENE_WIDTH = this.canvas.clientWidth;
-        this.SCENE_HEIGHT = this.canvas.clientHeight;
+        if (!this._sceneCtx) {
+            throw new Error("Scene context not found! Make sure CanvasManager is initialized.");
+        }
+
+        this.SCENE_WIDTH = this._sceneCanvas.width;
+        this.SCENE_HEIGHT = this._sceneCanvas.height;
 
         this.WALL_HEIGHT = 1; // UNIT GRID SYSTEM
 
@@ -17,7 +21,7 @@ class Scene {
         this.numeratorForWallHeightCalculation = null;
         this.distanceFromPlayerToProjectionPlane = null;
 
-        this.sceneFrame = this.canvasCtx.createImageData(this.SCENE_WIDTH, this.SCENE_HEIGHT);
+        this.sceneFrame = this._sceneCtx.createImageData(this.SCENE_WIDTH, this.SCENE_HEIGHT);
         this.sceneBuffer = new Uint32Array(this.sceneFrame.data.buffer);
 
         this.textureManager = null;
@@ -114,7 +118,7 @@ class Scene {
         this.sceneBuffer.fill(0x33333333);
     }
 
-    render(ctx) {
+    render() {
         this.#clearPixelMap();
     
         const walls = this.observer.raysHittingPoints.map((ray, index) => {
@@ -138,7 +142,7 @@ class Scene {
         this.#drawCeil(walls);
 
         
-        ctx.putImageData(this.sceneFrame, 0, 0);
+        this._sceneCtx.putImageData(this.sceneFrame, 0, 0);
     }
 
 }
