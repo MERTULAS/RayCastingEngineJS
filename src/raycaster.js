@@ -122,7 +122,7 @@ class RayCaster {
 
     #isRayCast (pointX, pointY) {
         const position = this.map.getTile(pointX, pointY);
-        if (position) {
+        if (position && position !== 5) {
             return position;
         }
 

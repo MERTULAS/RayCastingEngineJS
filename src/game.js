@@ -22,7 +22,7 @@ const MAP_LAYOUT = [
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+    [1, 0, 0, 0, 5, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -41,10 +41,11 @@ player.addObserver(map);
 const raycaster = new RayCaster(player, map);
 
 const textureManager = new TextureManager();
-await textureManager.addTexture("./sprites/textures/wolftextures32.png");
-await textureManager.addTexture("./sprites/textures/floor-texture.png");
-await textureManager.addTexture("./sprites/textures/null-floor.png");
-await textureManager.addTexture("./sprites/textures/floor_texture.png");
+await textureManager.addTexture("./sprites/textures/texture_10.png", 0); // floor
+await textureManager.addTexture("./sprites/textures/texture_3.png", 5); // floor
+await textureManager.addTexture("./sprites/textures/texture_2.png", 1);
+await textureManager.addTexture("./sprites/textures/texture_1.png", 2);
+await textureManager.addTexture("./sprites/textures/texture_9.png", 3); // ceil
 
 const scene = new Scene();
 scene.addObserver(raycaster);

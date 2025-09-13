@@ -49,13 +49,17 @@ export class Texture {
 
 class TextureManager {
     constructor() {
-        this.textures = [];
+        this.textures = new Map();
     }
 
-    async addTexture(imagePath) {
+    async addTexture(imagePath, mapKey) {
+        if (this.textures.has(mapKey)) {
+            throw new Error(`Texture with key ${mapKey} already exists`);
+        }
+
         const texture = new Texture(imagePath);
         await texture.load();
-        this.textures.push(texture);
+        this.textures.set(mapKey, texture);
     }
 }
 
