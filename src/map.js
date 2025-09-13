@@ -15,28 +15,27 @@ class Map {
         this.layout = layoutObject;
         this.gridCellWidth = parseInt(this.MAP_WIDTH / this.layout[0].length);
         this.gridCellHeight = parseInt(this.MAP_HEIGHT / this.layout.length);
+
+        this.mapFrame = this._mapCtx.createImageData(this.MAP_WIDTH, this.MAP_HEIGHT);
+        this.mapBuffer = new Uint32Array(this.mapFrame.data.buffer);
+
+        this.#createMapFrame();
     }
 
     render() {
-        this._mapCtx.strokeStyle = "black";
-        this._mapCtx.fillStyle = "black";
+        this._mapCtx.putImageData(this.mapFrame, 0, 0);
+    }
 
-        const height = this.layout.length;
-        const width = this.layout[0].length;
+    #clearMapFrame() {
+        this.mapBuffer.fill(0x00000000);
+    }
 
-        for (let column = 0; column < width; column++) {
-            for (let row = 0; row < height; row++) {
-
-                const x = column * this.gridCellWidth;
-                const y = row * this.gridCellHeight;
-
-                this._mapCtx.strokeRect(x, y, this.gridCellWidth, this.gridCellHeight);
-
-                if (this.layout[row][column]) {
-                    this._mapCtx.fillRect(x, y, this.gridCellWidth, this.gridCellHeight);
-                }
-            };
-        };
+    #createMapFrame() {
+        for (let row = 0; row < this.MAP_HEIGHT; row++) {
+            for (let column = 0; column < this.MAP_WIDTH; column++) {
+                this.mapBuffer[row * this.MAP_WIDTH + column] = this.layout[Math.floor(row / this.gridCellHeight)][Math.floor(column / this.gridCellWidth)] ? 0xFF000000 : 0xFF333333;
+            }
+        }
     }
 
     getTile(x, y) {
@@ -47,8 +46,8 @@ class Map {
         return this.layout[y][x];
     }
 
-    
-    
+
+
 }
 
 export default Map;

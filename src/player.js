@@ -16,8 +16,6 @@ class Player {
     };
 
     constructor (coordX, coordY) {
-
-        this._mapCanvas = CanvasManager.getInstance().getCanvas("map");
         this._mapCtx = CanvasManager.getInstance().getContext("map");
 
         this.observer = null;
@@ -75,6 +73,7 @@ class Player {
     }
 
     render () {
+        this._mapCtx.fillStyle = "red";
         this._mapCtx.beginPath();
         this._mapCtx.arc(this.observer.gridCellWidth * this.coordX, this.observer.gridCellHeight * this.coordY, this.size, 0, 2 * Math.PI);
         this._mapCtx.fill();
