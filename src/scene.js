@@ -4,7 +4,7 @@ import CanvasManager from "./canvas";
 class Scene {
 
     constructor() {
-        
+
         this._sceneCanvas = CanvasManager.getInstance().getCanvas("scene");
         this._sceneCtx = CanvasManager.getInstance().getContext("scene");
 
@@ -14,6 +14,11 @@ class Scene {
 
         this.SCENE_WIDTH = this._sceneCanvas.width;
         this.SCENE_HEIGHT = this._sceneCanvas.height;
+
+        this.screenMiddleHeight = this.SCENE_HEIGHT / 2;
+
+        this.floorTexture = null;
+        this.ceilTexture = null;
 
         this.WALL_HEIGHT = 1; // UNIT GRID SYSTEM
 
@@ -50,19 +55,19 @@ class Scene {
         this.distanceFromPlayerToProjectionPlane = (this.SCENE_WIDTH / 2) / Math.tan((this.observer.player.fieldOfViewDeg / 2) * RADIUS);
         this.numeratorForWallHeightCalculation = this.WALL_HEIGHT * this.distanceFromPlayerToProjectionPlane;
     }
- 
+
     #drawWall(x, y, color, height, hitValue, slicer) {
         let startY = Math.floor((this.SCENE_HEIGHT - height) / 2);
         let endY = startY + height;
-        
+
         startY = Math.max(-this.SCENE_HEIGHT * 5, startY);
         endY = Math.min(this.SCENE_HEIGHT * 5, endY);
-        
+
         const buffer = this.sceneBuffer;
         const width = this.SCENE_WIDTH;
-        
+
         const textureX = Math.floor(slicer * 32);
-        const wallTexture = this.textureManager.textures[0].getSliceBuffer(hitValue * 32 + textureX % 32, 0, 1, 32);
+        const wallTexture = this.textureManager.textures.get(hitValue).getSliceBuffer(textureX % 32, 0, 1, 32);
 
         for (let y = startY, texY = 0; y < endY; y++, texY++) {
             const textureY = Math.floor(((texY / height) * 32));
@@ -70,47 +75,41 @@ class Scene {
         }
     }
 
-    #drawFloor(walls) {
-        const screenMiddleHeight = this.SCENE_HEIGHT >> 1;
-        const floorTexture = this.textureManager.textures[3];
+    #drawFloor(wall, scanRange) {
+        for (let y = scanRange.min; y < scanRange.max; y++) {
+            const betaAngle = wall.rayAngle;
+            const rowDistance = this.observer.player.playerHeight * this.distanceFromPlayerToProjectionPlane / (y - this.screenMiddleHeight);
+            const realDistance = rowDistance / Math.cos((betaAngle - this.observer.player.rotate) * RADIUS);
 
-        for (const wall of walls) {
-            for (let y = screenMiddleHeight + (wall.height >> 1); y < this.SCENE_HEIGHT; y++) {
-                const betaAngle = wall.rayAngle;
-                const rowDistance = this.observer.player.playerHeight * this.distanceFromPlayerToProjectionPlane / (y - screenMiddleHeight);
-                const realDistance = rowDistance / Math.cos((betaAngle - this.observer.player.rotate) * RADIUS);
+            const floorX = this.observer.player.coordX + realDistance * Math.cos(betaAngle * RADIUS);
+            const floorY = this.observer.player.coordY + realDistance * Math.sin(betaAngle * RADIUS);
 
-                const floorX = this.observer.player.coordX + realDistance * Math.cos(betaAngle * RADIUS);
-                const floorY = this.observer.player.coordY + realDistance * Math.sin(betaAngle * RADIUS);
+            const floorTile = this.observer.map.getTile(Math.floor(floorX), Math.floor(floorY));
+            const floorTexture = this.textureManager.textures.get(floorTile);
 
-                const textureX = Math.floor(floorX * 32) & 31;
-                const textureY = Math.floor(floorY * 32) & 31;
-                
-                const color = floorTexture.getSliceBuffer(textureX, textureY, 1, 1);
-                this.sceneBuffer[y * this.SCENE_WIDTH + wall.x] = color[0];
-            }
+            const textureX = Math.floor(floorX * 32) & 31;
+            const textureY = Math.floor(floorY * 32) & 31;
+
+            const color = floorTexture.getSliceBuffer(textureX, textureY, 1, 1);
+            this.sceneBuffer[y * this.SCENE_WIDTH + wall.x] = color[0];
         }
+        //throw new Error("Floor draw error");
     }
 
-    #drawCeil(walls) {
-        const screenMiddleHeight = this.SCENE_HEIGHT >> 1;
-        const floorTexture = this.textureManager.textures[1];
+    #drawCeil(wall, scanRange) {
+        for (let y = scanRange.min; y < scanRange.max; y++) {
+            const betaAngle = wall.rayAngle;
+            const rowDistance = this.observer.player.playerHeight * this.distanceFromPlayerToProjectionPlane / (this.screenMiddleHeight - y);
+            const realDistance = rowDistance / Math.cos((betaAngle - this.observer.player.rotate) * RADIUS);
 
-        for (const wall of walls) {
-            for (let y = 0; y < screenMiddleHeight - (wall.height >> 1); y++) {
-                const betaAngle = wall.rayAngle;
-                const rowDistance = this.observer.player.playerHeight * this.distanceFromPlayerToProjectionPlane / (screenMiddleHeight - y);
-                const realDistance = rowDistance / Math.cos((betaAngle - this.observer.player.rotate) * RADIUS);
+            const ceilX = this.observer.player.coordX + realDistance * Math.cos(betaAngle * RADIUS);
+            const ceilY = this.observer.player.coordY + realDistance * Math.sin(betaAngle * RADIUS);
 
-                const ceilX = this.observer.player.coordX + realDistance * Math.cos(betaAngle * RADIUS);
-                const ceilY = this.observer.player.coordY + realDistance * Math.sin(betaAngle * RADIUS);
+            const textureX = Math.floor(ceilX * 32) & 31;
+            const textureY = Math.floor(ceilY * 32) & 31;
 
-                const textureX = Math.floor(ceilX * 32) & 31;
-                const textureY = Math.floor(ceilY * 32) & 31;
-                
-                const color = floorTexture.getSliceBuffer(textureX, textureY, 1, 1);
-                this.sceneBuffer[y * this.SCENE_WIDTH + wall.x] = color[0];
-            }
+            const color = this.ceilTexture.getSliceBuffer(textureX, textureY, 1, 1);
+            this.sceneBuffer[y * this.SCENE_WIDTH + wall.x] = color[0];
         }
     }
 
@@ -120,7 +119,7 @@ class Scene {
 
     render() {
         this.#clearPixelMap();
-    
+
         const walls = this.observer.raysHittingPoints.map((ray, index) => {
             const angleDiff = ray.angle - this.observer.player.rotate;
             const correctedRayDistance = (ray.distance * Math.cos(angleDiff * RADIUS));
@@ -133,15 +132,14 @@ class Scene {
             };
         });
 
-        this.#drawFloor(walls);
-        
+        this.ceilTexture = this.textureManager.textures.get(3);
+
         for (const wall of walls) {
+            this.#drawCeil(wall, { min: 0, max: this.screenMiddleHeight - (wall.height >> 1) });
             this.#drawWall(wall.x, 0, 0xFF000000, wall.height, wall.hitValue, wall.slicer);
+            this.#drawFloor(wall, { min: this.screenMiddleHeight + (wall.height >> 1), max: this.SCENE_HEIGHT });
         }
 
-        this.#drawCeil(walls);
-
-        
         this._sceneCtx.putImageData(this.sceneFrame, 0, 0);
     }
 

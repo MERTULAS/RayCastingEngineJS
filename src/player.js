@@ -86,11 +86,11 @@ class Player {
         this._mapCtx.stroke();
     }
 
-    #blockedAreaControlForMovement(newLocation) {
+    #isBlockedAreaForMovement(newLocation) {
         const coordXOnMap = Math.floor(newLocation.x);
         const coordYOnMap = Math.floor(newLocation.y);
 
-        if (this.observer.getTile(coordXOnMap, coordYOnMap) === 0) {
+        if (this.observer.isBlockedArea(coordXOnMap, coordYOnMap)) {
             return true;
         }
 
@@ -108,28 +108,28 @@ class Player {
 
         if (this.movementKeys.w) {
             newPosition = {x: this.coordX + this.speed * cos, y: this.coordY + this.speed * sin};
-            if (this.#blockedAreaControlForMovement(newPosition)) {
+            if (!this.#isBlockedAreaForMovement(newPosition)) {
                 this.coordX = newPosition.x;
                 this.coordY = newPosition.y;
             }
         }
         if (this.movementKeys.s){
             newPosition = {x: this.coordX - this.speed * cos, y: this.coordY - this.speed * sin};
-            if (this.#blockedAreaControlForMovement(newPosition)) {
+            if (!this.#isBlockedAreaForMovement(newPosition)) {
                 this.coordX = newPosition.x;
                 this.coordY = newPosition.y;
             }
         }
         if (this.movementKeys.a) {
             newPosition = {x: this.coordX - this.speed * minusSin, y: this.coordY - this.speed * minusCos};
-            if (this.#blockedAreaControlForMovement(newPosition)) {
+            if (!this.#isBlockedAreaForMovement(newPosition)) {
                 this.coordX = newPosition.x;
                 this.coordY = newPosition.y;
             }
         };
         if (this.movementKeys.d) {
             newPosition = {x: this.coordX + this.speed * minusSin, y: this.coordY + this.speed * minusCos};
-            if (this.#blockedAreaControlForMovement(newPosition)) {
+            if (!this.#isBlockedAreaForMovement(newPosition)) {
                 this.coordX = newPosition.x;
                 this.coordY = newPosition.y;
             }

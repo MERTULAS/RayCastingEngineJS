@@ -19,6 +19,10 @@ class Map {
         this.mapFrame = this._mapCtx.createImageData(this.MAP_WIDTH, this.MAP_HEIGHT);
         this.mapBuffer = new Uint32Array(this.mapFrame.data.buffer);
 
+        this.blockedAreas = new Set();
+        this.blockedAreas.add(1);
+        this.blockedAreas.add(2);
+        
         this.#createMapFrame();
     }
 
@@ -33,7 +37,8 @@ class Map {
     #createMapFrame() {
         for (let row = 0; row < this.MAP_HEIGHT; row++) {
             for (let column = 0; column < this.MAP_WIDTH; column++) {
-                this.mapBuffer[row * this.MAP_WIDTH + column] = this.layout[Math.floor(row / this.gridCellHeight)][Math.floor(column / this.gridCellWidth)] ? 0xFF000000 : 0xFF333333;
+                const tile = this.layout[Math.floor(row / this.gridCellHeight)][Math.floor(column / this.gridCellWidth)];
+                this.mapBuffer[row * this.MAP_WIDTH + column] = this.blockedAreas.has(tile) ? 0xFF000000 : 0xFF333333;
             }
         }
     }
@@ -44,6 +49,11 @@ class Map {
         }
 
         return this.layout[y][x];
+    }
+
+    isBlockedArea(x, y) {
+        const tile = this.getTile(x, y);
+        return this.blockedAreas.has(tile);
     }
 
 
