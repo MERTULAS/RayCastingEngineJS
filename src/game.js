@@ -53,7 +53,7 @@ scene.addTextureManager(textureManager);
 
 const engine = new Engine();
 
-engine.addGameObject(map);
+engine.addGameObject(map); // Should be first to render, because it's the background (maybe this mandatory rule will be removed in future)
 engine.addGameObject(player);
 engine.addGameObject(raycaster);
 engine.addGameObject(scene);

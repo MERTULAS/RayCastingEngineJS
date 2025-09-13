@@ -19,9 +19,10 @@ class RayCaster {
     }
 
     render() {
+        
         for(let i = 0; i < this.raysHittingPoints.length; i++) {
             const ray = this.raysHittingPoints[i];
-            this._mapCtx.strokeStyle = ray.side === 0 ? 'rgba(255,0,0,0.8)' : 'rgba(200,0,0,0.8)';
+            this._mapCtx.strokeStyle = ray.side === 0 ? 'rgba(255,255,255,0.2)' : 'rgba(200,200,200,0.2)';
             this._mapCtx.beginPath();
             this._mapCtx.moveTo(this.player.coordX * this.map.gridCellWidth, this.player.coordY * this.map.gridCellHeight);
             this._mapCtx.lineTo(ray.x * this.map.gridCellWidth, ray.y * this.map.gridCellHeight);
