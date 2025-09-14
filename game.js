@@ -1,10 +1,10 @@
-import Engine from "./engine";
-import Map from "./map";
-import Player from "./player";
-import RayCaster from "./raycaster";
-import Scene from "./scene";
-import TextureManager from "./textures";
-import CanvasManager from "./canvas";
+import Engine from "./lib/engine";
+import Map from "./lib/map";
+import Player from "./lib/player";
+import RayCaster from "./lib/raycaster";
+import Scene from "./lib/scene";
+import TextureManager from "./lib/textures";
+import CanvasManager from "./lib/canvas";
 
 const canvasManager = CanvasManager.getInstance();
 
@@ -41,11 +41,12 @@ player.addObserver(map);
 const raycaster = new RayCaster(player, map);
 
 const textureManager = new TextureManager();
-await textureManager.addTexture("./sprites/textures/texture_10.png", 0); // floor
-await textureManager.addTexture("./sprites/textures/texture_3.png", 5); // floor
-await textureManager.addTexture("./sprites/textures/texture_2.png", 1);
-await textureManager.addTexture("./sprites/textures/texture_1.png", 2);
-await textureManager.addTexture("./sprites/textures/texture_9.png", 3); // ceil
+
+await textureManager.addTexture("textures/texture_10.png", 0); // floor
+await textureManager.addTexture("textures/texture_3.png", 5); // special floor
+await textureManager.addTexture("textures/texture_2.png", 1); // wall
+await textureManager.addTexture("textures/texture_1.png", 2); // wall
+await textureManager.addTexture("textures/texture_9.png", 3); // ceiling
 
 const scene = new Scene();
 scene.addObserver(raycaster);
@@ -63,5 +64,3 @@ engine.addGameObject(scene);
 export function game () {
     engine.start();
 };
-
-game();
