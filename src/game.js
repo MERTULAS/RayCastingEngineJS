@@ -63,5 +63,3 @@ engine.addGameObject(scene);
 export function game () {
     engine.start();
 };
-
-game();
