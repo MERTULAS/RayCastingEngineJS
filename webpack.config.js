@@ -1,39 +1,71 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const webpack = require('webpack');
 
-module.exports = {
-  entry: './src/index.js',
-  output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist')
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: 'index.html'
-    })
-  ],
-  devServer: {
-    static: [
-      {
-        directory: path.join(__dirname, 'src/sprites'),
-        publicPath: '/sprites',
-      }
+module.exports = (env, argv) => {
+  const isDevelopment = argv.mode === 'development';
+  const isProduction = argv.mode === 'production';
+  
+  return {
+    entry: './index.js',
+    output: {
+      filename: 'bundle.js',
+      path: path.resolve(__dirname, 'dist'),
+      clean: true
+    },
+    plugins: [
+      new HtmlWebpackPlugin({
+        template: 'index.html'
+      }),
+      
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(argv.mode || 'development'),
+        'process.env.ASSETS_PATH': JSON.stringify(isDevelopment ? '/assets' : './assets'),
+        'process.env.DEBUG': JSON.stringify(isDevelopment),
+        '__DEV__': isDevelopment,
+        '__PROD__': isProduction
+      }),
+      
+      ...(isProduction ? [
+        new CopyWebpackPlugin({
+          patterns: [
+            {
+              from: path.resolve(__dirname, 'assets'),
+              to: path.resolve(__dirname, 'dist/assets'),
+            },
+          ],
+        })
+      ] : [])
     ],
-  },  
-  mode: 'development',
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader'
+    devServer: {
+      static: [
+        {
+          directory: path.join(__dirname, 'assets'),
+          publicPath: '/assets',
         }
-      },
-      {
-        test: /\.(png|jpg|jpeg|gif)$/i,
-        type: 'asset/resource'
-      }
-    ]
-  }
+      ],
+      hot: true,
+      open: true,
+    },  
+    mode: argv.mode || 'development',
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader'
+          }
+        },
+        {
+          test: /\.(png|jpg|jpeg|gif|svg)$/i,
+          type: 'asset/resource',
+          generator: {
+            filename: 'assets/images/[name][ext]'
+          }
+        }
+      ]
+    }
+  };
 };
