@@ -1,18 +1,5 @@
-import Engine from "./lib/engine";
-import Map from "./lib/map";
-import Player from "./lib/player";
-import RayCaster from "./lib/raycaster";
-import Scene from "./lib/scene";
-import TextureManager from "./lib/textures";
-import CanvasManager from "./lib/canvas";
-
-const canvasManager = CanvasManager.getInstance();
-
-canvasManager.registerMapCanvas("map");
-console.log(canvasManager._canvases);
-canvasManager.registerSceneCanvas("scene");
-
-const MAP_LAYOUT = [
+/*
+const WALL_MAP_LAYOUT = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -34,8 +21,27 @@ const MAP_LAYOUT = [
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 ];
+*/
 
-const map = new Map(MAP_LAYOUT);
+import Engine from "./lib/engine";
+import Map from "./lib/map";
+import Player from "./lib/player";
+import RayCaster from "./lib/raycaster";
+import Scene from "./lib/scene";
+import TextureManager from "./lib/textures";
+import CanvasManager from "./lib/canvas";
+import LayoutLoader from "./lib/layout-loader";
+
+const canvasManager = CanvasManager.getInstance();
+
+canvasManager.registerMapCanvas("map");
+canvasManager.registerSceneCanvas("scene");
+
+const layoutLoader = new LayoutLoader();    
+const GAME_LAYOUT = await layoutLoader.loadMap('layout.json');
+console.log(layoutLoader.getLayoutStatistics(GAME_LAYOUT));
+
+const map = new Map(GAME_LAYOUT.layout, layoutLoader.toMapLayoutFormat(GAME_LAYOUT));
 const player = new Player(2.5, 9.5);
 player.addObserver(map);
 const raycaster = new RayCaster(player, map);
