@@ -6,7 +6,7 @@ const webpack = require('webpack');
 module.exports = (env, argv) => {
   const isDevelopment = argv.mode === 'development';
   const isProduction = argv.mode === 'production';
-  
+
   return {
     entry: './index.js',
     output: {
@@ -18,15 +18,16 @@ module.exports = (env, argv) => {
       new HtmlWebpackPlugin({
         template: 'index.html'
       }),
-      
+
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(argv.mode || 'development'),
         'process.env.ASSETS_PATH': JSON.stringify(isDevelopment ? '/assets' : './assets'),
+        'process.env.DATA_PATH': JSON.stringify(isDevelopment ? '/data' : './data'),  
         'process.env.DEBUG': JSON.stringify(isDevelopment),
         '__DEV__': isDevelopment,
         '__PROD__': isProduction
       }),
-      
+
       ...(isProduction ? [
         new CopyWebpackPlugin({
           patterns: [
@@ -34,6 +35,10 @@ module.exports = (env, argv) => {
               from: path.resolve(__dirname, 'assets'),
               to: path.resolve(__dirname, 'dist/assets'),
             },
+            {
+              from: path.resolve(__dirname, 'data'),
+              to: path.resolve(__dirname, 'dist/data'),
+            }
           ],
         })
       ] : [])
@@ -43,11 +48,15 @@ module.exports = (env, argv) => {
         {
           directory: path.join(__dirname, 'assets'),
           publicPath: '/assets',
+        },
+        {
+          directory: path.join(__dirname, 'data'),
+          publicPath: '/data'
         }
       ],
       hot: true,
       open: true,
-    },  
+    },
     mode: argv.mode || 'development',
     module: {
       rules: [
