@@ -7,7 +7,10 @@
 
 ## Features Added with v2.0.0
 ![Alt Text](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExN2prZW4zeWVoMGx4MXZjb2ZmNnhqbmxhaGNiMTJnYTB1ZXRjaDd3YSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/sH54Ln2FZnkMZFGd8V/giphy.gif)
+### Spesific tile texture mapping
+![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExaG5wcHNkYmt3eGhuaXJpcXB0NDM4YmV3YmR5YWdqbTdrcmt3aHQzOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ZdIxj4snnDx0srXtpE/giphy.gif)
 
+- Implemented JSON layout loader system for reading structured map data and 3D render integration.
 - Project structure changed to separate filing system.
 - Engine structure established.
 - Developed floor and ceiling texture mapping.
