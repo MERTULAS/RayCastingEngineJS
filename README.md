@@ -22,6 +22,6 @@ TODO:
 - Structures at different heights
 - Sprites
 - Mouse controller (Done but should be improve)
-- ~Movement on the y-axis.~~
+- ~~Movement on the y-axis.~~
 - 360 degree parallax sky improvement
 - Multiplayer system.
