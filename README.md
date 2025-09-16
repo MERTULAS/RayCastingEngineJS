@@ -21,7 +21,7 @@ TODO:
 - Shader
 - Structures at different heights
 - Sprites
-- Mouse controller (Done but should be improve)
+- ~~Mouse controller~~
 - ~~Movement on the y-axis.~~
 - 360 degree parallax sky improvement
 - Multiplayer system.
