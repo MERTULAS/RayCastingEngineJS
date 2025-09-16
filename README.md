@@ -18,7 +18,7 @@
 
 TODO:
 - ~~Floor and ceil textures.~~
-- Shader
+- ~~Shadow effect for long distance~~
 - Structures at different heights
 - Sprites
 - ~~Mouse controller~~
