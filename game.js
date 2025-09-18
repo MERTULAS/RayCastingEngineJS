@@ -39,6 +39,8 @@ canvasManager.registerSceneCanvas("scene");
 
 const layoutLoader = new LayoutLoader();    
 const GAME_LAYOUT = await layoutLoader.loadMap('layout.json');
+layoutLoader.addSpriteToLayout(GAME_LAYOUT, null);
+
 console.log(layoutLoader.getLayoutStatistics(GAME_LAYOUT));
 
 const map = new Map(GAME_LAYOUT.layout, layoutLoader.toMapLayoutFormat(GAME_LAYOUT));
@@ -53,6 +55,13 @@ await textureManager.addTexture("textures/texture_3.png", 5); // special floor
 await textureManager.addTexture("textures/texture_2.png", 1); // wall
 await textureManager.addTexture("textures/texture_1.png", 2); // wall
 await textureManager.addTexture("textures/texture_9.png", 3); // ceiling
+
+
+await textureManager.addTexture("sprites/torch_1.png", 6); // torch1
+await textureManager.addTexture("sprites/torch_2.png", 6); // torch2
+await textureManager.addTexture("sprites/torch_3.png", 6); // torch3
+await textureManager.addTexture("sprites/torch_4.png", 6); // torch4
+await textureManager.addTexture("sprites/torch_5.png", 6); // torch5
 
 const scene = new Scene();
 scene.addObserver(raycaster);
