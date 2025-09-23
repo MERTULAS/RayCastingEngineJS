@@ -44,7 +44,7 @@ layoutLoader.addSpriteToLayout(GAME_LAYOUT, null);
 console.log(layoutLoader.getLayoutStatistics(GAME_LAYOUT));
 
 const map = new Map(GAME_LAYOUT.layout, layoutLoader.toMapLayoutFormat(GAME_LAYOUT));
-const player = new Player(2.5, 9.5);
+const player = new Player(5, 4);
 player.addObserver(map);
 const raycaster = new RayCaster(player, map);
 
