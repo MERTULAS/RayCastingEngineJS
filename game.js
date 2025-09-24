@@ -26,7 +26,6 @@ const WALL_MAP_LAYOUT = [
 import Engine from "./lib/engine";
 import Map from "./lib/map";
 import Player from "./lib/player";
-import RayCaster from "./lib/raycaster";
 import Scene from "./lib/scene";
 import TextureManager from "./lib/textures";
 import CanvasManager from "./lib/canvas";
@@ -46,7 +45,6 @@ console.log(layoutLoader.getLayoutStatistics(GAME_LAYOUT));
 const map = new Map(GAME_LAYOUT.layout, layoutLoader.toMapLayoutFormat(GAME_LAYOUT));
 const player = new Player(5, 4);
 player.addObserver(map);
-const raycaster = new RayCaster(player, map);
 
 const textureManager = new TextureManager();
 
@@ -64,7 +62,8 @@ await textureManager.addTexture("sprites/torch_4.png", 6); // torch4
 await textureManager.addTexture("sprites/torch_5.png", 6); // torch5
 
 const scene = new Scene();
-scene.addObserver(raycaster);
+scene.addPlayer(player);
+scene.addMap(map);
 scene.addTextureManager(textureManager);
 
 
@@ -72,7 +71,6 @@ const engine = new Engine();
 
 engine.addGameObject(map); // Should be first to render, because it's the background (maybe this mandatory rule will be removed in future)
 engine.addGameObject(player);
-engine.addGameObject(raycaster);
 engine.addGameObject(scene);
 
 
