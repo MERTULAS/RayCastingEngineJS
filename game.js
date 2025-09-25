@@ -43,7 +43,7 @@ layoutLoader.addSpriteToLayout(GAME_LAYOUT, null);
 console.log(layoutLoader.getLayoutStatistics(GAME_LAYOUT));
 
 const map = new Map(GAME_LAYOUT.layout, layoutLoader.toMapLayoutFormat(GAME_LAYOUT));
-const player = new Player(5, 4);
+const player = new Player(3, 4);
 player.addObserver(map);
 
 const textureManager = new TextureManager();

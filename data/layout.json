@@ -165,7 +165,7 @@
       {"wall":null,"ceil":3,"floor":0,"blocked":false,"transparent":false,"ceilHeight":1,"floorHeight":0},
       {"wall":1,"ceil":3,"floor":0,"blocked":true,"transparent":false,"ceilHeight":0.2,"floorHeight":0,"sprite":6},
       {"wall":null,"ceil":3,"floor":0,"blocked":false,"transparent":false,"ceilHeight":1,"floorHeight":0},
-      {"wall":null,"ceil":3,"floor":0,"blocked":false,"transparent":false,"ceilHeight":1,"floorHeight":0},
+      {"wall":3,"ceil":3,"floor":0,"blocked":true,"transparent":false,"ceilHeight":0.4,"floorHeight":0.2},
       {"wall":null,"ceil":3,"floor":0,"blocked":false,"transparent":false,"ceilHeight":1,"floorHeight":0},
       {"wall":null,"ceil":3,"floor":0,"blocked":false,"transparent":false,"ceilHeight":1,"floorHeight":0},
       {"wall":null,"ceil":3,"floor":0,"blocked":false,"transparent":false,"ceilHeight":1,"floorHeight":0},
