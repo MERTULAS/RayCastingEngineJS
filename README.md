@@ -16,11 +16,11 @@
 - Perspective texture mapping for floor and ceil.
 
 TODO:
-- [] Floor and ceil textures.
-- [] Shadow effect for long distance
-- [] Structures at different heights
-- [] Sprites
-- [] Mouse controller
-- [] Movement on the y-axis.
-- [] 360 degree parallax sky improvement
-- [] Multiplayer system.
+- [x] Floor and ceil textures.
+- [x] Shadow effect for long distance
+- [ ] Structures at different heights
+- [ ] Sprites
+- [x] Mouse controller
+- [x] Movement on the y-axis.
+- [ ] 360 degree parallax sky improvement
+- [ ] Multiplayer system.
