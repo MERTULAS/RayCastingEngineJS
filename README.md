@@ -11,6 +11,8 @@
 ![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExanoxc3RvYzgyM2I2cW9zeTk3N2lxZ2g2OHI4aHc5MWVvanZpZml0YyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/kfy6WFQ6WSiWqCY0YT/giphy.gif)
 ### Spesific tile texture mapping
 ![Alt Text](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExaG5wcHNkYmt3eGhuaXJpcXB0NDM4YmV3YmR5YWdqbTdrcmt3aHQzOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ZdIxj4snnDx0srXtpE/giphy.gif)
+### Structures at different heights and drawing ceils and floors them
+![Alt Text]([https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExaG5wcHNkYmt3eGhuaXJpcXB0NDM4YmV3YmR5YWdqbTdrcmt3aHQzOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ZdIxj4snnDx0srXtpE/giphy.gif](https://media.giphy.com/media/U81eaXmJTjgkRO07yN/giphy.gif))
 
 - Implemented JSON layout loader system for reading structured map data and 3D render integration.
 - Project structure changed to separate filing system.
@@ -20,7 +22,7 @@
 TODO:
 - [x] Floor and ceil textures.
 - [x] Shadow effect for long distance
-- [ ] Structures at different heights
+- [X] Structures at different heights
 - [ ] Sprites
 - [x] Mouse controller
 - [x] Movement on the y-axis.
